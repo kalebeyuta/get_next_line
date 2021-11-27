@@ -1,62 +1,69 @@
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+/* concatena duas strings */
+char	*ft_strjoin(char *s1, char *s2)
 {
-	int		counter;
-	int		length1;
-	int		length2;
-	char	*joined;
+	size_t	i;
+	size_t	j;
+	char	*str;
 
-	length1 = ft_strlen(s1);
-	length2 = ft_strlen(s2);
-	joined = (char *)malloc(sizeof(char) * (length1 + length2) + 1);
-	if (joined == NULL)
-	return (NULL);
-
-	counter = 0;
-	while (s1[counter])
+	i = 0;
+	j = 0;
+/*	alocar memoria para s1 afim de retornar nossa resultado caso nossa linha seja nula */
+	if (s1 == NULL)
 	{
-		joined[counter] = s1[counter];
-		counter++;
+		s1 = (char *)malloc(sizeof(char) * 1);
+		s1[0] = '\0';
 	}
-	counter = 0;
-	while (s2[counter])
-	{
-		joined[length1 + counter] = s2[counter];
-		counter++;
-	}
-	joined[length1 + counter] = '\0';
-	return (joined);
+/*	alocar o espaço de memoria para que nossa nova string receba o conteudo de 's' em sua totalidade */
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (str == NULL)
+		return (NULL);
+/*	copiar a primeira string em sua totalidade para nossa nova string */
+	while (s1[j] != '\0')
+		str[i++] = s1[j++];
+	j = 0;
+/*	copiar a segunda string em sua totalidade para nossa nova string */
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	free(s1);
+	return (str);
 }
 
-int	ft_strlen(const char *str)
-{
-	int		cont;
-
-	cont = 0;
-	while (*str)
-	{
-		str++;
-		cont++;
-	}
-	return (cont);
-}
-char	*ft_strchr(char *src, int c)
+/* contar a quantidade de caracteres de uma string */
+size_t	ft_strlen(char *s)
 {
 	size_t	i;
 
 	i = 0;
-	if (src == NULL)
+/*	enquanto minha string 's' nao chegar ao fim iremos incrementar nosso conta\
+dor 'i' */
+	while (s[i] != 0)
+		i++;
+/*	nosso contador 'i' possui o tamanho de nossa string */
+	return (i);
+}
+
+/*	apontar em uma string a ultima ocorrencia de um caractere */
+char	*ft_strchr(char *line, int c)
+{
+	size_t	i;
+
+	i = 0;
+	if (line == NULL)
 		return (0);
 /*	caso o caractere que buscamos seja '\0', devemos retornar sua ocorrencia */
 	if (c == '\0')
-		return ((char *)&src[ft_strlen(src)]);
+		return ((char *)&line[ft_strlen(line)]);
 /*	buscar por nosso caractere passado como parametro e retornar sua ocorrencia dentro de nossa string */
-	while (src[i] != '\0')
+	while (line[i] != '\0')
 	{
-		if (src[i] == (char)c)
-			return ((char *)&src[i]);
+		if (line[i] == (char)c)
+			return ((char *)&line[i]);
 		i++;
 	}
 	return (0);
 }
+
+/*	retornar a linha que esta sendo "lida" neste momento */

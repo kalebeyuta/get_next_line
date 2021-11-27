@@ -5,9 +5,9 @@
 # endif
 #include<unistd.h>
 #include<stdlib.h>
-char	*ft_strchr(char *src, int c);
-int	    ft_strlen(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(char *line, int c);
+size_t	ft_strlen(char *s);
+char	*ft_strjoin(char *s1, char *s2);
 char    *get_next_line(int fd);
 char    *get_line(int fd, char *line);
 char	*read_line(char *get_line);
